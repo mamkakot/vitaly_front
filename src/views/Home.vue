@@ -1,18 +1,21 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div v-for="photo in photos" :key="photo">
+      <VitalyPhoto :id="photo" />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import { ref } from 'vue'
+import VitalyPhoto from '@/components/VitalyPhoto.vue'
 export default {
-  name: "Home",
-  components: {
-    HelloWorld,
+  setup() {
+    const photos = ref([1, 2])
+    return { photos }
   },
-};
+  components: {
+    VitalyPhoto,
+  },
+}
 </script>

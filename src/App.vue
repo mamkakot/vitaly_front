@@ -1,14 +1,17 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/">Домашняя</router-link> |
+    <router-link to="/about">О Виталике</router-link>
+    <h1>Этот сайт посвящён Виталику -- лучшему человеку на планете!</h1>
   </div>
   <router-view />
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
