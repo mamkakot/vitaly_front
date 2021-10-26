@@ -7,7 +7,11 @@
     </h5>
     <el-row>
       <el-col :span="24">
-        <el-image :src="require('../assets/vit1.jpg')"></el-image>
+        <el-image
+          :src="require('../assets/vit1.jpg')"
+          class="vitaly"
+          contain
+        ></el-image>
       </el-col>
     </el-row>
   </div>
@@ -25,5 +29,16 @@
 .about h5 {
   font-weight: 100;
   margin-top: 0%;
+}
+
+.vitaly {
+  max-width: 50%;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 558px) {
+  .vitaly {
+    max-width: 100%;
+  }
 }
 </style>

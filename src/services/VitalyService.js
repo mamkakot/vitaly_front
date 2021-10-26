@@ -17,4 +17,9 @@ export default {
   getPhotoInfo(id) {
     return apiClient.get('/photos/' + id)
   },
+
+  // добавить на сервер обработку IP, отправку рейтингов только нужного юзера
+  getUserRatings(ip) {
+    return apiClient.get('/user_ips/' + ip)
+  },
 }
