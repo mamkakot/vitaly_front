@@ -16,27 +16,40 @@
 
 <script>
 import { ref } from 'vue'
+import VitalyService from '@/services/VitalyService.js'
 
 export default {
   setup(props) {
-    const photo_value = ref(0)
     const avg = ref(props.photo.avg_rating.value__avg)
     const avg_rating = ref(Number(avg.value == null ? 0 : avg.value.toFixed(1)))
     const rating = ref(props.userRating == null ? 0 : props.userRating)
-    console.log(rating.value)
-    function rate(value) {
-      console.log(value)
-      photo_value.value = 0
-    }
 
     function rate_change(value) {
-      console.log(value)
+      post_rating(value)
     }
-    return { photo_value, rate, rate_change, avg_rating, rating }
+
+    function post_rating(rating_value) {
+      VitalyService.getPhotoInfo(props.photo.id).then((response) => {
+        let photo = response.data
+
+        VitalyService.getUserInfo(props.userId).then((response) => {
+          let user = response.data
+          let rating = {
+            photo: photo,
+            user_ip: user,
+            value: rating_value,
+          }
+          console.log(rating)
+          VitalyService.createRating(rating)
+        })
+      })
+    }
+    return { rate_change, avg_rating, rating }
   },
   props: {
     photo: Object,
     userRating: Number,
+    userId: Number,
   },
 }
 </script>

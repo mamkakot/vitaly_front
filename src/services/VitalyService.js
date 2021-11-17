@@ -18,8 +18,24 @@ export default {
     return apiClient.get('/photos/' + id)
   },
 
+  getUsers() {
+    return apiClient.get('/user_ips')
+  },
+
+  getUserInfo(id) {
+    return apiClient.get('user_ips/' + id)
+  },
+
   // добавить на сервер обработку IP, отправку рейтингов только нужного юзера
   getUserRatings(ip) {
     return apiClient.get('/user_ips/' + ip)
+  },
+
+  createUserIp(ip) {
+    return apiClient.post('/user_ips/', ip)
+  },
+
+  createRating(rating) {
+    return apiClient.post('/ratings/', rating)
   },
 }

@@ -7,17 +7,6 @@
   <router-view />
 </template>
 
-<script>
-export default {
-  setup() {
-    fetch('https://api.ipify.org?format=json')
-      .then((x) => x.json())
-      .then(({ ip }) => {
-        console.log(ip)
-      })
-  },
-}
-</script>
 <style>
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
