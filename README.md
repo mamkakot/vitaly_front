@@ -1,4 +1,4 @@
-# nails
+# vitaly web site UwU
 
 ## Project setup
 ```
