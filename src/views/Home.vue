@@ -16,6 +16,7 @@ import VitalyPhoto from '@/components/VitalyPhoto.vue'
 import VitalyService from '@/services/VitalyService.js'
 export default {
   setup() {
+    const photos = ref(0)
     let user_ip = ''
     const userId = ref(0)
     fetch('https://api.ipify.org?format=json')
@@ -51,30 +52,26 @@ export default {
           })
       })
 
-      .then()
+      .then(() => {
+        VitalyService.getPhotos()
+          .then((response) => {
+            photos.value = response.data
 
-    const photos = ref(0)
-    const ratings = ref(Array)
-    VitalyService.getPhotos()
-      .then((response) => {
-        photos.value = response.data
+            function getRatingByUserIp(photo, userId) {
+              return photo.ratings.filter(function (data) {
+                return data.user_ip == userId
+              })
+            }
 
-        function getRatingByUserIp(photo, user_ip) {
-          return photo.ratings.filter(function (data) {
-            return data.user_ip == user_ip
+            photos.value.forEach((photo) => {
+              let rating = getRatingByUserIp(photo, userId.value)[0]
+              photo['rating'] = rating
+            })
           })
-        }
-
-        photos.value.forEach((photo) => {
-          photo['rating'] =
-            getRatingByUserIp(photo, user_ip)[0] == null
-              ? 0
-              : getRatingByUserIp(photo, user_ip)[0].value
-        })
+          .catch((error) => console.log(error))
       })
-      .catch((error) => console.log(error))
 
-    return { photos, ratings, userId }
+    return { photos, userId }
   },
   components: {
     VitalyPhoto,

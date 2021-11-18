@@ -38,4 +38,9 @@ export default {
   createRating(rating) {
     return apiClient.post('/ratings/', rating)
   },
+
+  updateRating(rating) {
+    console.log(rating)
+    return apiClient.put('/ratings/' + rating.id + '/', rating)
+  },
 }

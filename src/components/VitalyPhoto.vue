@@ -22,33 +22,33 @@ export default {
   setup(props) {
     const avg = ref(props.photo.avg_rating.value__avg)
     const avg_rating = ref(Number(avg.value == null ? 0 : avg.value.toFixed(1)))
-    const rating = ref(props.userRating == null ? 0 : props.userRating)
+    const rating = ref(props.userRating == null ? 0 : props.userRating.value)
 
     function rate_change(value) {
+      if (rating.value != 0) {
+        let rate = props.userRating
+        rate.value = value
+        console.log(rate)
+        VitalyService.updateRating(rate)
+        return
+      }
+
       post_rating(value)
     }
 
     function post_rating(rating_value) {
-      VitalyService.getPhotoInfo(props.photo.id).then((response) => {
-        let photo = response.data
-
-        VitalyService.getUserInfo(props.userId).then((response) => {
-          let user = response.data
-          let rating = {
-            photo: photo,
-            user_ip: user,
-            value: rating_value,
-          }
-          console.log(rating)
-          VitalyService.createRating(rating)
-        })
-      })
+      let rating = {
+        photo: props.photo.id,
+        user_ip: props.userId,
+        value: rating_value,
+      }
+      VitalyService.createRating(rating)
     }
     return { rate_change, avg_rating, rating }
   },
   props: {
     photo: Object,
-    userRating: Number,
+    userRating: Object,
     userId: Number,
   },
 }
