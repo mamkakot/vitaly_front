@@ -26,6 +26,10 @@ export default {
     return apiClient.get('user_ips/' + id)
   },
 
+  getRatingInfo(id) {
+    return apiClient.get('ratings/' + id)
+  },
+
   // добавить на сервер обработку IP, отправку рейтингов только нужного юзера
   getUserRatings(ip) {
     return apiClient.get('/user_ips/' + ip)

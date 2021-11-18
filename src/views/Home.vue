@@ -37,7 +37,6 @@ export default {
             if (isUserRigistered(user_ip).length <= 0) {
               VitalyService.createUserIp({ ip: user_ip.toString() })
                 .then((response) => {
-                  console.log(response.data)
                   userId.value = response.data.id
                 })
                 .catch((error) => {

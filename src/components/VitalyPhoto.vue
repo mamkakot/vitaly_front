@@ -2,6 +2,7 @@
   <div class="photo">
     <el-image :src="photo.image" fit="fill" class="image" lazy></el-image>
     <h2 class="title">{{ photo.title }}</h2>
+    <h5 class="description">{{ photo.description }}</h5>
     <div class="rate">
       <h4>Средняя оценка:</h4>
       <el-rate v-model="avg_rating" disabled disabled-void-color="#ccd9da">
@@ -25,17 +26,24 @@ export default {
     const rating = ref(props.userRating == null ? 0 : props.userRating.value)
 
     function rate_change(value) {
-      if (rating.value != 0) {
+      console.log(props.userRating)
+      if (props.userRating != null) {
         let rate = props.userRating
         rate.value = value
-        console.log(rate)
         VitalyService.updateRating(rate)
-        return
+      } else {
+        post_rating(value)
       }
 
-      post_rating(value)
+      reload_avg_rating()
     }
 
+    function reload_avg_rating() {
+      VitalyService.getPhotoInfo(props.photo.id).then((response) => {
+        avg_rating.value = response.data.avg_rating.value__avg
+        console.log(response.data.avg_rating.value__avg)
+      })
+    }
     function post_rating(rating_value) {
       let rating = {
         photo: props.photo.id,
@@ -67,7 +75,6 @@ export default {
   margin-bottom: 10px;
 
   margin-left: 5%;
-  margin-right: 5%;
 }
 .rate h4 {
   flex-grow: 1;
@@ -89,5 +96,13 @@ export default {
 .title {
   text-align: left;
   margin-left: 5%;
+  margin-bottom: 1%;
+}
+
+.description {
+  text-align: left;
+  margin-left: 6%;
+  margin-top: 0%;
+  font-weight: 100;
 }
 </style>
